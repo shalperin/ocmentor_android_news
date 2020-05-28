@@ -1,4 +1,4 @@
-package com.example.mynews
+package com.example.mynews.models.topstories
 
 data class Multimedia(
     val caption: String,

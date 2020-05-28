@@ -1,4 +1,6 @@
-package com.example.mynews
+package com.example.mynews.models.topstories
+
+import com.example.mynews.models.topstories.Article
 
 data class Response(
     val copyright: String,

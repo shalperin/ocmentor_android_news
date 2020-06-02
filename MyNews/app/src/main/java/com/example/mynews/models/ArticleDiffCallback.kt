@@ -1,14 +1,13 @@
 package com.example.mynews.models
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.mynews.models.topstories.Article
 
-open class ArticleDiffCallback: DiffUtil.ItemCallback<Article>() {
-    override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-        return oldItem.uri == newItem.uri
+open class ArticleDiffCallback: DiffUtil.ItemCallback<AbstractArticle>() {
+    override fun areItemsTheSame(oldItem: AbstractArticle, newItem: AbstractArticle): Boolean {
+        return oldItem.getUri() == newItem.getUri()
     }
 
-    override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+    override fun areContentsTheSame(oldItem: AbstractArticle, newItem: AbstractArticle): Boolean {
         return oldItem == newItem
     }
 }

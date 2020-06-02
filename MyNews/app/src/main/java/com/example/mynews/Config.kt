@@ -1,9 +1,9 @@
 package com.example.mynews
 
-import com.example.mynews.models.topstories.Article
+import com.example.mynews.models.AbstractArticle
 import okhttp3.logging.HttpLoggingInterceptor
 
-typealias ArticlesOrError = Pair<Throwable?, List<Article>?>
+typealias ArticlesOrError = Pair<Throwable?, List<AbstractArticle>?>
 
 const val apiKey = BuildConfig.API_KEY
 const val apiSecret = BuildConfig.API_SECRET

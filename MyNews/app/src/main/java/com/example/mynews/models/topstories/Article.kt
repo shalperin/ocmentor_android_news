@@ -1,8 +1,6 @@
 package com.example.mynews.models.topstories
 
-import org.joda.time.DateTime
-
-import org.joda.time.format.DateTimeFormat
+import com.example.mynews.models.AbstractArticle
 
 
 data class Article(
@@ -18,32 +16,43 @@ data class Article(
     val org_facet: List<String>,
     val per_facet: List<String>,
     val published_date: String,
+
+    @get:JvmName("getSection_")
     val section: String,
+
     val short_url: String,
     val subsection: String,
-    val title: String,
-    val updated_date: String,
-    val uri: String,
-    val url: String
-) {
 
-    //TODO the section "Most Popular" uses a slightly different API.  It looks OK with
-    // this implementation, but images will be null.
-    fun getStandardThumb():String? {
-        var uri:String? =  null
+    @get:JvmName("getTitle_")
+    val title: String,
+
+    val updated_date: String,
+
+    @get:JvmName("getUri_")
+    val uri: String,
+
+    val url: String
+): AbstractArticle() {
+
+    override fun getTitle():String { return title }
+    override fun getSection(): String { return section }
+
+    override fun getThumbnailUrl():String? {
+        var url:String? =  null
         try {
-            uri = multimedia.filter {
+            url = multimedia.filter {
                 it.format == "Standard Thumbnail"
             }.getOrNull(0)?.url
         } catch (e: Exception) {}
 
-        return uri
+        return url
     }
 
-    fun getHumanizedPublishedDate(): String {
-        val dt = DateTime.parse(published_date)
-        val formatterOut = DateTimeFormat.forPattern("M/d/yy")
-        return dt.toString(formatterOut)
+    override fun getPublishedDate(): String {
+        return published_date
     }
+
+    override fun getUri() : String { return uri }
+
 }
 

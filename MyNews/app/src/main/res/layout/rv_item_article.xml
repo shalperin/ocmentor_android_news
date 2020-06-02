@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="8dp"
+        android:src="@drawable/nyt_logo"
         />
 
     <TextView

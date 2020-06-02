@@ -11,22 +11,28 @@ import retrofit2.http.Query
 
 interface TimesService {
     @GET(topStoriesPath)
-    fun topStories(@Query("api-key") apiKey:String): Call<Response>
+    fun topStories(@Query("api-key") apiKey:String):
+            Call<com.example.mynews.models.topstories.Response>
 
     @GET(artsPath)
-    fun arts(@Query("api-key") apiKey:String): Call<Response>
+    fun arts(@Query("api-key") apiKey:String):
+            Call<com.example.mynews.models.topstories.Response>
 
     @GET(mostPopularPath)
-    fun mostPopular(@Query("api-key") apiKey:String): Call<Response>
+    fun mostPopular(@Query("api-key") apiKey:String):
+            Call<com.example.mynews.models.mostpopular.Response>
 
     @GET(technologyPath)
-    fun technology(@Query("api-key") apiKey:String): Call<Response>
+    fun technology(@Query("api-key") apiKey:String):
+            Call<com.example.mynews.models.topstories.Response>
 
     @GET(automobilesPath)
-    fun automobiles(@Query("api-key") apiKey:String): Call<Response>
+    fun automobiles(@Query("api-key") apiKey:String):
+            Call<com.example.mynews.models.topstories.Response>
 
     @GET(realEstatePath)
-    fun realEstate(@Query("api-key") apiKey:String): Call<Response>
+    fun realEstate(@Query("api-key") apiKey:String):
+            Call<com.example.mynews.models.topstories.Response>
 }
 
 val logging = HttpLoggingInterceptor().setLevel(logLevel)

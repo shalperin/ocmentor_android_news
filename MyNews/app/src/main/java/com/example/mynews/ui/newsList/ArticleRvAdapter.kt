@@ -1,4 +1,4 @@
-package com.example.mynews.ui
+package com.example.mynews.ui.newsList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.rv_item_article.view.*
 
 
-class ArticleRvAdapter() : ListAdapter<AbstractArticle, ArticleRvAdapter.VH > (
+class ArticleRvAdapter() : ListAdapter<AbstractArticle, ArticleRvAdapter.VH> (
     ArticleDiffCallback()
 ) {
 

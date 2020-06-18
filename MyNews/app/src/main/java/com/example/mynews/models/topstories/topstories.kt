@@ -2,6 +2,14 @@ package com.example.mynews.models.topstories
 
 import com.example.mynews.models.AbstractArticle
 
+data class Response(
+    val copyright: String,
+    val last_updated: String,
+    val num_results: Int,
+    val results: List<Article>,
+    val section: String,
+    val status: String
+)
 
 data class Article(
     val `abstract`: String,
@@ -55,4 +63,17 @@ data class Article(
     override fun getUri() : String { return uri }
 
 }
+
+
+
+data class Multimedia(
+    val caption: String,
+    val copyright: String,
+    val format: String,
+    val height: Int,
+    val subtype: String,
+    val type: String,
+    val url: String,
+    val width: Int
+)
 

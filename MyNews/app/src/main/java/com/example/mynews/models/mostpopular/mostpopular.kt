@@ -2,6 +2,12 @@ package com.example.mynews.models.mostpopular
 
 import com.example.mynews.models.AbstractArticle
 
+data class Response(
+    val copyright: String,
+    val num_results: Int,
+    val results: List<Article>,
+    val status: String
+)
 
 data class Article(
     val `abstract`: String,
@@ -42,11 +48,32 @@ data class Article(
     override fun getPublishedDate(): String { return published_date}
 
     override fun getThumbnailUrl() : String? {
-        val url = media.getOrNull(0)?.`media-metadata`?.filter{
-            it.format == "Standard Thumbnail"
-        }?.getOrNull(0)?.url
+        val url = media
+            .getOrNull(0)
+            ?.`media-metadata`
+            ?.filter{ it.format == "Standard Thumbnail" }
+            ?.getOrNull(0)?.url
         return url
     }
 
     override fun getUri() : String { return uri }
 }
+
+
+data class Media(
+    val approved_for_syndication: Int,
+    val caption: String,
+    val copyright: String,
+    val `media-metadata`: List<MediaMetadata>,
+    val subtype: String,
+    val type: String
+)
+
+
+
+data class MediaMetadata(
+    val format: String,
+    val height: Int,
+    val url: String,
+    val width: Int
+)

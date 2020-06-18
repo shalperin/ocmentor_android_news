@@ -16,7 +16,7 @@ abstract class AbstractArticle {
 
     override fun hashCode(): Int {
         return getThumbnailUrl().hashCode() * getSection().hashCode() * getTitle().hashCode() *
-                getUri().hashCode() * getPublishedDate().hashCode() as Int
+                getUri().hashCode() * getPublishedDate().hashCode()
     }
 
     fun getHumanizedPublishedDate(): String {

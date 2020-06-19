@@ -1,84 +1,121 @@
 package com.example.mynews
 
 import androidx.lifecycle.MutableLiveData
-import com.example.mynews.models.topstories.Response
+import org.joda.time.DateTime
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
+
+typealias TopStoriesResponse = com.example.mynews.models.topstories.Response
+typealias MostPopularResponse = com.example.mynews.models.mostpopular.Response
+typealias SearchResponse = com.example.mynews.models.search.Response
 
 class Repository :IRepository {
 
-    private val newsFeed = MutableLiveData<ArticlesOrError>()
+    private val _newsFeed = MutableLiveData<ArticlesOrError>()
 
-    override fun getTopStories():MutableLiveData<ArticlesOrError> {
-        return loadFromTopStories(timesService.topStories(apiKey))
+    override fun getNewsFeed(): MutableLiveData<ArticlesOrError> {
+        return _newsFeed
     }
 
-    override fun getArts():MutableLiveData<ArticlesOrError> {
-        return loadFromTopStories(timesService.arts(apiKey))
+    override fun getTopStories(){
+        loadFromTopStories(timesService.topStories(apiKey))
     }
 
-    override fun getRealEstate():MutableLiveData<ArticlesOrError> {
-        return loadFromTopStories(timesService.realEstate(apiKey))
+    override fun getArts() {
+        loadFromTopStories(timesService.arts(apiKey))
     }
 
-    override fun getAutomobiles():MutableLiveData<ArticlesOrError> {
-        return loadFromTopStories(timesService.automobiles(apiKey))
+    override fun getRealEstate() {
+        loadFromTopStories(timesService.realEstate(apiKey))
     }
 
-    override fun getTechnology():MutableLiveData<ArticlesOrError> {
-        return loadFromTopStories(timesService.technology(apiKey))
+    override fun getAutomobiles(){
+        loadFromTopStories(timesService.automobiles(apiKey))
     }
 
-    override fun getMostPopular():MutableLiveData<ArticlesOrError> {
-        return loadFromMostPopular(timesService.mostPopular(apiKey))
+    override fun getTechnology() {
+        loadFromTopStories(timesService.technology(apiKey))
     }
 
-    override fun initNewsFeed() = getTopStories()
+    override fun getMostPopular(){
+        loadFromMostPopular(timesService.mostPopular(apiKey))
+    }
 
-    fun loadFromTopStories(call: Call<Response>): MutableLiveData<ArticlesOrError> {
-        call.enqueue(object: Callback<Response>{
-            override fun onFailure(call: Call<Response>, t: Throwable) {
-                newsFeed.value = Pair(t, null)
+    //Todo this only supports term right now.
+    override fun getSearch(query: String?, beginDate:DateTime?, endDate:DateTime?, filters: List<String>?)
+    {
+        if (query == null) {
+            _newsFeed.value = Pair(Exception("Can't search for a null query."), null)
+        } else {
+            loadFromSearch(timesService.search(query, apiKey))
+        }
+
+    }
+
+    fun loadFromTopStories(call: Call<TopStoriesResponse>) {
+        val callback =
+
+        call.enqueue(object: Callback<TopStoriesResponse>{
+
+            override fun onFailure(call: Call<TopStoriesResponse>, t: Throwable) {
+                _newsFeed.value = Pair(t, null)
             }
 
-            override fun onResponse(call: Call<Response>, response: retrofit2.Response<Response>) {
-                val response = response.body()
-                if (response != null) {
-                    newsFeed.value = Pair(null, response.results)
+            override fun onResponse(call: Call<TopStoriesResponse>,
+                                    response: retrofit2.Response<TopStoriesResponse>) {
+                val body = response.body()
+                if (body != null) {
+                    _newsFeed.value = Pair(null, body.results)
                 }
             }
         })
-        return newsFeed
     }
 
-    fun loadFromMostPopular(call: Call<com.example.mynews.models.mostpopular.Response>):
-            MutableLiveData<ArticlesOrError> {
-        call.enqueue(object: Callback<com.example.mynews.models.mostpopular.Response>{
-            override fun onFailure(call: Call<com.example.mynews.models.mostpopular.Response>, t: Throwable) {
-                newsFeed.value = Pair(t, null)
+    fun loadFromMostPopular(call: Call<MostPopularResponse>){
+        call.enqueue(object: Callback<MostPopularResponse> {
+
+            override fun onFailure(call: Call<MostPopularResponse>, t: Throwable) {
+                _newsFeed.value = Pair(t, null)
             }
 
-            override fun onResponse(call: Call<com.example.mynews.models.mostpopular.Response>,
-                                    response: retrofit2.Response<com.example.mynews.models.mostpopular.Response>) {
-                val response = response.body()
-                if (response != null) {
-                    newsFeed.value = Pair(null, response.results)
+            override fun onResponse(call: Call<MostPopularResponse>,
+                                    response: retrofit2.Response<MostPopularResponse>) {
+                val body = response.body()
+                if (body != null) {
+                    _newsFeed.value = Pair(null, body.results)
                 }
             }
         })
-        return newsFeed
     }
 
+    fun loadFromSearch(call: Call<SearchResponse>){
+        call.enqueue(object: Callback<SearchResponse> {
+            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                _newsFeed.value = Pair(t, null)
+            }
 
+            override fun onResponse(
+                call: Call<SearchResponse>,
+                response: Response<SearchResponse>
+            ) {
+                val body = response.body()
+                val docs = body?.response?.docs
+                if (docs != null) {
+                    _newsFeed.value = Pair(null, docs)
+                }
+            }
+        })
+    }
 }
 
 interface IRepository {
-    fun initNewsFeed(): MutableLiveData<ArticlesOrError>
-    fun getTopStories() : MutableLiveData<ArticlesOrError>
-    fun getArts():MutableLiveData<ArticlesOrError>
-    fun getRealEstate():MutableLiveData<ArticlesOrError>
-    fun getAutomobiles():MutableLiveData<ArticlesOrError>
-    fun getTechnology():MutableLiveData<ArticlesOrError>
-    fun getMostPopular():MutableLiveData<ArticlesOrError>
-
+    fun getNewsFeed(): MutableLiveData<ArticlesOrError>
+    fun getTopStories()
+    fun getArts()
+    fun getRealEstate()
+    fun getAutomobiles()
+    fun getTechnology()
+    fun getMostPopular()
+    fun getSearch(term: String?, beginDate: DateTime?, endDate: DateTime?, filters: List<String>?)
 }

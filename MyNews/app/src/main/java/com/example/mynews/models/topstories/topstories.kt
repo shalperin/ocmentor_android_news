@@ -1,6 +1,6 @@
 package com.example.mynews.models.topstories
 
-import com.example.mynews.models.AbstractArticle
+import com.example.mynews.models.AbstractNewsDoc
 
 data class Response(
     val copyright: String,
@@ -40,10 +40,10 @@ data class Article(
     val uri: String,
 
     val url: String
-): AbstractArticle() {
+): AbstractNewsDoc() {
 
     override fun getTitle():String { return title }
-    override fun getSection(): String { return section }
+    override fun getSectionOrType(): String { return section }
 
     override fun getThumbnailUrl():String? {
         var url:String? =  null

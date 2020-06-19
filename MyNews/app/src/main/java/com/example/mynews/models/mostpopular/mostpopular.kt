@@ -1,6 +1,6 @@
 package com.example.mynews.models.mostpopular
 
-import com.example.mynews.models.AbstractArticle
+import com.example.mynews.models.AbstractNewsDoc
 
 data class Response(
     val copyright: String,
@@ -39,11 +39,11 @@ data class Article(
     @get:JvmName("getUri_")
     val uri: String,
     val url: String
-) : AbstractArticle() {
+) : AbstractNewsDoc() {
 
     override fun getTitle(): String { return title }
 
-    override fun getSection():String { return section }
+    override fun getSectionOrType():String { return section }
 
     override fun getPublishedDate(): String { return published_date}
 

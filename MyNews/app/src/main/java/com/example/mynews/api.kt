@@ -1,6 +1,5 @@
 package com.example.mynews
 
-import com.example.mynews.models.topstories.Response
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -33,6 +32,14 @@ interface TimesService {
     @GET(realEstatePath)
     fun realEstate(@Query("api-key") apiKey:String):
             Call<com.example.mynews.models.topstories.Response>
+
+    //todo this needs to support a few other fields.
+    @GET(searchPath)
+    fun search(
+        @Query("query") query:String,
+        @Query( "api-key") apiKey:String):
+            Call<com.example.mynews.models.search.Response>
+
 }
 
 val logging = HttpLoggingInterceptor().setLevel(logLevel)

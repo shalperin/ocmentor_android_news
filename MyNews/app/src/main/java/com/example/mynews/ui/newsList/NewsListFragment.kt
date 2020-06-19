@@ -2,16 +2,13 @@ package com.example.mynews.ui.newsList
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mynews.viewmodels.MainViewModel
 import com.example.mynews.R
-import com.example.mynews.models.AbstractArticle
-import com.example.mynews.ui.newsList.ArticleRvAdapter
+import com.example.mynews.models.AbstractNewsDoc
 import kotlinx.android.synthetic.main.fragment_top_news.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -31,8 +28,8 @@ class NewsListFragment : Fragment(R.layout.fragment_top_news) {
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(requireActivity())
 
-        viewModel.newsFeed.observe(viewLifecycleOwner,
-            Observer<Pair<Throwable?, List<AbstractArticle>?>> { (error, data) ->
+        viewModel.getNewsFeed().observe(viewLifecycleOwner,
+            Observer<Pair<Throwable?, List<AbstractNewsDoc>?>> { (error, data) ->
                 if (data != null) {
                    adapter?.submitList(data)
                 } else {

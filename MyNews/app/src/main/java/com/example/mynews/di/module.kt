@@ -7,6 +7,11 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val newsModule = module {
-    viewModel { MainViewModel(get()) }
+
+    // WRONG:
+    //  viewModel { MainViewModel(get()) }
+    single { MainViewModel(get()) }  // this needs to be a singleton to share across fragments.
+
+
     single { Repository() as IRepository }
 }

@@ -1,9 +1,9 @@
 package com.example.mynews
 
-import com.example.mynews.models.AbstractArticle
+import com.example.mynews.models.AbstractNewsDoc
 import okhttp3.logging.HttpLoggingInterceptor
 
-typealias ArticlesOrError = Pair<Throwable?, List<AbstractArticle>?>
+typealias ArticlesOrError = Pair<Throwable?, List<AbstractNewsDoc>?>
 
 const val apiKey = BuildConfig.API_KEY
 const val apiSecret = BuildConfig.API_SECRET
@@ -18,5 +18,6 @@ const val artsPath = "topstories/v2/arts.json"
 const val realEstatePath = "topstories/v2/realestate.json"
 const val technologyPath = "topstories/v2/technology.json"
 const val automobilesPath = "topstories/v2/automobiles.json"
+const val searchPath = "search/v2/articlesearch.json?"
 
-
+const val staticBasePath = "https://static01.nyt.com/"

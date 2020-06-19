@@ -7,7 +7,12 @@
 
     <fragment
         android:id="@+id/topNewsFragment"
-        android:name="com.example.mynews.ui.NewsListFragment"
+        android:name="com.example.mynews.ui.newsList.NewsListFragment"
         android:label="fragment_top_news"
         tools:layout="@layout/fragment_top_news" />
+    <fragment
+        android:id="@+id/search"
+        android:name="com.example.mynews.ui.Search"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

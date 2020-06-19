@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.Search"
+    android:padding="16dp"
+    >
+
+    <EditText
+        android:id="@+id/search_term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="Search query term"
+        android:layout_marginBottom="16dp"
+        />
+
+    <TextView
+        android:id="@+id/begin_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_term"
+        app:layout_constraintRight_toLeftOf="@+id/end_date"
+        android:layout_marginRight="8dp"
+        android:hint="Begin Date"
+        />
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintRight_toRightOf="@id/begin_date"
+        app:layout_constraintTop_toTopOf="@id/begin_date"
+        app:layout_constraintBottom_toBottomOf="@id/begin_date"
+        android:src="@drawable/ic_baseline_arrow_drop_down_24"
+        />
+
+
+
+    <TextView
+        android:id="@+id/end_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/search_term"
+        app:layout_constraintLeft_toRightOf="@+id/begin_date"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        android:hint="End Date"
+        />
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintRight_toRightOf="@+id/end_date"
+        app:layout_constraintTop_toTopOf="@id/end_date"
+        app:layout_constraintBottom_toBottomOf="@id/end_date"
+        android:src="@drawable/ic_baseline_arrow_drop_down_24"
+        />
+
+
+
+
+
+
+
+
+    <CheckBox
+        android:id="@+id/arts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/end_date"
+        app:layout_constraintRight_toLeftOf="@id/politics"
+        android:text="Arts"
+        android:layout_marginTop="16dp"
+        />
+
+    <CheckBox
+        android:id="@+id/politics"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/arts"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/arts"
+        android:text="Politics"/>
+
+
+
+
+    <CheckBox
+        android:id="@+id/business"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arts"
+        app:layout_constraintRight_toLeftOf="@id/politics"
+        android:text="Business"
+        />
+
+    <CheckBox
+        android:id="@+id/sports"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/arts"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/business"
+        android:text="Sports"/>
+
+
+
+
+    <CheckBox
+        android:id="@+id/entrepreneurs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/business"
+        app:layout_constraintRight_toLeftOf="@id/politics"
+        android:text="Entrepreneurs"
+        />
+
+    <CheckBox
+        android:id="@+id/travel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/arts"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/entrepreneurs"
+        android:text="Travel"/>
+
+
+
+
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SEARCH"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/travel"
+        android:layout_marginTop="16dp"
+        />
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

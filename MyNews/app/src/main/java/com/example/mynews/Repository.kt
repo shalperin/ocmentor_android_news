@@ -43,13 +43,16 @@ class Repository :IRepository {
     }
 
     //Todo this only supports term right now.
-    override fun getSearch(query: String?, beginDate:DateTime?, endDate:DateTime?, filters: List<String>?)
+    override fun getSearch(query: String?, beginDate:DateTime?, endDate:DateTime?, newsDesks: List<String>?)
     {
-        if (query == null) {
-            _newsFeed.value = Pair(Exception("Can't search for a null query."), null)
-        } else {
-            loadFromSearch(timesService.search(query, apiKey))
-        }
+        loadFromSearch(timesService.search(
+            query=query,
+            apiKey = apiKey ,
+            filters = formatNewsDeskFilters(newsDesks),
+            beginDate = formatDateForQuery(beginDate),
+            endDate = formatDateForQuery(endDate)
+        ))
+
 
     }
 
@@ -107,6 +110,8 @@ class Repository :IRepository {
             }
         })
     }
+
+
 }
 
 interface IRepository {

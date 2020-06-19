@@ -10,53 +10,53 @@ data class Response(
 )
 
 data class Article(
-    val `abstract`: String,
-    val adx_keywords: String,
-    val asset_id: Long,
-    val byline: String,
-    val column: Any,
-    val des_facet: List<String>,
-    val eta_id: Int,
-    val geo_facet: List<String>,
-    val id: Long,
-    val media: List<Media>,
-    val nytdsection: String,
-    val org_facet: List<String>,
-    val per_facet: List<String>,
+    val `abstract`: String?,
+    val adx_keywords: String?,
+    val asset_id: Long?,
+    val byline: String?,
+    val column: Any?,
+    val des_facet: List<String>?,
+    val eta_id: Int?,
+    val geo_facet: List<String>?,
+    val id: Long?,
+    val media: List<Media>?,
+    val nytdsection: String?,
+    val org_facet: List<String>?,
+    val per_facet: List<String>?,
     val published_date: String,
 
     @get:JvmName("getSection_")
-    val section: String,
+    val section: String?,
 
-    val source: String,
-    val subsection: String,
+    val source: String?,
+    val subsection: String?,
 
     @get:JvmName("getTitle_")
-    val title: String,
-    val type: String,
-    val updated: String,
+    val title: String?,
+    val type: String?,
+    val updated: String?,
 
     @get:JvmName("getUri_")
     val uri: String,
-    val url: String
+    val url: String?
 ) : AbstractNewsDoc() {
 
-    override fun getTitle(): String { return title }
+    override fun getTitle(): String { return title ?: ""  }
 
-    override fun getSectionOrType():String { return section }
+    override fun getSectionOrType():String { return section ?: "" }
 
     override fun getPublishedDate(): String { return published_date}
 
     override fun getThumbnailUrl() : String? {
         val url = media
-            .getOrNull(0)
+            ?.getOrNull(0)
             ?.`media-metadata`
             ?.filter{ it.format == "Standard Thumbnail" }
             ?.getOrNull(0)?.url
         return url
     }
 
-    override fun getUri() : String { return uri }
+    override fun getUri() : String { return uri}
 }
 
 

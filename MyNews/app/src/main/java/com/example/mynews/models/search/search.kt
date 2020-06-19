@@ -16,51 +16,50 @@ data class ResponseX(
 )
 
 data class Doc(
-    val _id: String,
-    val `abstract`: String,
-    val byline: Byline,
-    val document_type: String,
-    val headline: Headline,
-    val keywords: List<Keyword>,
-    val lead_paragraph: String,
-    val multimedia: List<Multimedia>,
-    val news_desk: String,
-    val print_page: String,
-    val print_section: String,
+    val _id: String?,
+    val `abstract`: String?,
+    val byline: Byline?,
+    val document_type: String?,
+    val headline: Headline?,
+    val keywords: List<Keyword>?,
+    val lead_paragraph: String?,
+    val multimedia: List<Multimedia>?,
+    val news_desk: String?,
+    val print_page: String?,
+    val print_section: String?,
     val pub_date: String,
-    val section_name: String,
-    val snippet: String,
-    val source: String,
-    val subsection_name: String,
-    val type_of_material: String,
+    val section_name: String?,
+    val snippet: String?,
+    val source: String?,
+    val subsection_name: String?,
+    val type_of_material: String?,
 
     @get:JvmName("getUri_")
     val uri: String,
-    val web_url: String,
-    val word_count: Int
+    val web_url: String?,
+    val word_count: Int?
 ): AbstractNewsDoc() {
     override fun getThumbnailUrl(): String? {
-        var path:String? =  null
-        try {
-            val path = multimedia
-                .filter { it.subtype == "thumbnail" }
-                .getOrNull(0)
-                ?.url
-        } catch (e: Exception) {}
+        val path = multimedia
+            ?.filter { it.subtype == "thumbnail" }
+            ?.getOrNull(0)
+            ?.url
 
         return relStatic(path)
     }
 
     override fun getSectionOrType(): String {
-        if (!section_name.isEmpty()) {
+        if (section_name != null && !section_name.isEmpty()) {
             return section_name
-        } else {
+        } else if (document_type != null && !document_type.isEmpty()) {
             return document_type
+        } else {
+            return ""
         }
     }
 
     override fun getTitle(): String {
-        return headline.main
+        return headline?.main ?: ""
     }
 
     override fun getUri(): String {

@@ -1,15 +1,13 @@
 package com.example.mynews.ui
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mynews.R
@@ -23,61 +21,47 @@ class Search : Fragment(R.layout.fragment_search) {
     private val viewModel by viewModel<MainViewModel>()
     lateinit var beginDatePickerDialog:DatePickerDialog
     lateinit var endDatePickerDialog: DatePickerDialog
+    lateinit var filters: List<Pair<CheckBox, String>>
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         createDatePickerDialogs()
+        latchUiElements()
         bindObservers()
         bindListeners()
-        Log.d("FRAGAMEMNON", "hello world")
-        Log.d("FRAGAMEMNON", viewModel.getSearchBeginDate().value.toString())
-    }
+       }
 
     fun bindObservers() {
         viewModel.getSearchBeginDate().observe(viewLifecycleOwner, Observer {
-            begin_date.text = it.toString("MM/dd/YYYY") })
+            begin_date.text = it?.toString("MM/dd/YYYY") })
 
         viewModel.getSearchEndDate().observe(viewLifecycleOwner, Observer {
-            end_date.text = it.toString("MM/dd/YYYY") })
+            end_date.text = it?.toString("MM/dd/YYYY") })
+
+        viewModel.getSearchQuery().observe(viewLifecycleOwner, Observer {
+            search_term.setText(it)
+        })
+
+        viewModel.getFilters().observe( viewLifecycleOwner, Observer { activeFilters ->
+            filters.forEach {
+                    (checkbox, name) ->
+                        if (activeFilters.contains(name)) {
+                            checkbox.isChecked = true
+                        } else {
+                            checkbox.isChecked = false
+                        }
+            }
+        })
     }
 
     fun bindListeners() {
         search_btn.setOnClickListener(searchButtonOnClickListener)
-        search_term.addTextChangedListener(searchTermOnTextChangeListener)
         begin_date.setOnClickListener { beginDatePickerDialog.show() }
         end_date.setOnClickListener { endDatePickerDialog.show() }
-        arts.setOnClickListener(filterCheckboxOnClickListener)
-        business.setOnClickListener(filterCheckboxOnClickListener)
-        politics.setOnClickListener(filterCheckboxOnClickListener)
-        sports.setOnClickListener(filterCheckboxOnClickListener)
-        entrepreneurs.setOnClickListener(filterCheckboxOnClickListener)
-        travel.setOnClickListener(filterCheckboxOnClickListener)
-
     }
 
-
-
-    val searchButtonOnClickListener = View.OnClickListener {
-        val query = search_term.text.toString()
-        if (query.isEmpty()) {
-            Toast.makeText(requireContext(), "Please enter a search term.", Toast.LENGTH_LONG)
-                .show()
-        } else {
-            viewModel.submitSearch()
-            findNavController().navigate(R.id.topNewsFragment)
-        }
-    }
-
-    val searchTermOnTextChangeListener = object: TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.setSearchQuery(s.toString())
-        }
-    }
-
-    val filterCheckboxOnClickListener = View.OnClickListener {
-        val filters = listOf(
+    fun latchUiElements() {
+        filters = listOf(
             Pair(arts, "arts"),
             Pair(business, "business"),
             Pair(politics, "politics"),
@@ -85,11 +69,20 @@ class Search : Fragment(R.layout.fragment_search) {
             Pair(entrepreneurs, "entrepreneurs"),
             Pair(travel, "travel")
         )
-        val stringArray = filters
+    }
+
+
+
+    val searchButtonOnClickListener = View.OnClickListener {
+        val query = search_term.text.toString()
+        viewModel.setSearchFilters(filters
             .filter { (checkbox, _) -> checkbox.isChecked }
             .map { (_, filterName) -> filterName }
+        )
+        viewModel.setSearchQuery(query)
+        viewModel.submitSearch()
+        findNavController().navigate(R.id.topNewsFragment)
 
-        viewModel.setSearchFilters(stringArray)
     }
 
     fun createDatePickerDialogs() {
@@ -99,12 +92,18 @@ class Search : Fragment(R.layout.fragment_search) {
                 viewModel.setSearchBeginDate(
                     DateTime()
                         .withYear(year)
-                        .withMonthOfYear(month)
+                        .withMonthOfYear(month + 1)
                         .withDayOfMonth(dayOfMonth)
 
                 )
             }
         }
+
+        beginDatePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Clear", object: DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                viewModel.setSearchBeginDate(null)
+            }
+        })
 
         endDatePickerDialog = object: DatePickerDialog(requireContext()) {
             override fun onDateChanged(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
@@ -112,12 +111,18 @@ class Search : Fragment(R.layout.fragment_search) {
                 viewModel.setSearchEndDate(
                     DateTime()
                         .withYear(year)
-                        .withMonthOfYear(month)
+                        .withMonthOfYear(month + 1)
                         .withDayOfMonth(dayOfMonth)
 
                 )
             }
         }
+
+        endDatePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Clear", object: DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                viewModel.setSearchBeginDate(null)
+            }
+        })
     }
 
 

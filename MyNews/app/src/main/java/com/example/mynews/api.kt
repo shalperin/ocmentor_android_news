@@ -36,8 +36,13 @@ interface TimesService {
     //todo this needs to support a few other fields.
     @GET(searchPath)
     fun search(
-        @Query("query") query:String,
-        @Query( "api-key") apiKey:String):
+        @Query("query") query:String?,
+        @Query( "api-key") apiKey:String,
+        @Query("fq" ) filters:String?, // fq:news_desk("Sports" "Arts") see NYT api docs
+        @Query("begin_date") beginDate: String?,
+        @Query("end_date") endDate: String?
+
+        ):
             Call<com.example.mynews.models.search.Response>
 
 }

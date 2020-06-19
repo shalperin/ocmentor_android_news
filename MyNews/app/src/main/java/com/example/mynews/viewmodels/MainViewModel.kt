@@ -18,7 +18,6 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
     private val searchQuery = MutableLiveData<String>()
 
     init {
-        Log.d("FRAGAMEMNON", "new viewmodel instance")
         newsFeed = repo.getNewsFeed()
         repo.getTopStories()
     }
@@ -41,9 +40,9 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
 
 
 
-    fun setSearchBeginDate(dt: DateTime) { searchBeginDate.value = dt }
+    fun setSearchBeginDate(dt: DateTime?) { searchBeginDate.value = dt }
 
-    fun setSearchEndDate(dt: DateTime) { searchEndDate.value = dt }
+    fun setSearchEndDate(dt: DateTime?) { searchEndDate.value = dt }
 
     fun getSearchBeginDate(): LiveData<DateTime> {
         return searchBeginDate
@@ -54,7 +53,8 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
     }
 
     fun setSearchQuery(q: String) {
-        searchQuery.value = q
+            searchQuery.value = q
+
     }
 
     fun setSearchFilters(f: List<String>) {
@@ -68,6 +68,14 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
         val query = searchQuery.value
 
         repo.getSearch(query, beginDate, endDate, filters)
+    }
+
+    fun getSearchQuery(): LiveData<String> {
+        return searchQuery
+    }
+
+    fun getFilters(): LiveData<List<String>> {
+        return searchFilters
     }
 
 

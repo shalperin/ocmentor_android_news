@@ -46,12 +46,11 @@ data class Article(
     override fun getSectionOrType(): String { return section ?: ""}
 
     override fun getThumbnailUrl():String? {
-        var url:String? =  null
-        try {
-            url = multimedia
-                ?.filter { it.format == "Standard Thumbnail" }
-                ?.getOrNull(0)?.url
-        } catch (e: Exception) {}
+
+        val url = multimedia
+            ?.filter { it.format == "Standard Thumbnail" }
+            ?.getOrNull(0)
+            ?.url
 
         return url
     }

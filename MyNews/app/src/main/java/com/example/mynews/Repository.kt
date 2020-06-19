@@ -18,6 +18,12 @@ class Repository :IRepository {
         return _newsFeed
     }
 
+    private val _articlesLoading = MutableLiveData<Boolean>()
+
+    override fun articlesLoading(): MutableLiveData<Boolean> {
+        return _articlesLoading
+    }
+
     override fun getTopStories(){
         loadFromTopStories(timesService.topStories(apiKey))
     }
@@ -57,12 +63,12 @@ class Repository :IRepository {
     }
 
     fun loadFromTopStories(call: Call<TopStoriesResponse>) {
-        val callback =
-
+        _articlesLoading.value = true
         call.enqueue(object: Callback<TopStoriesResponse>{
 
             override fun onFailure(call: Call<TopStoriesResponse>, t: Throwable) {
                 _newsFeed.value = Pair(t, null)
+                _articlesLoading.value = false
             }
 
             override fun onResponse(call: Call<TopStoriesResponse>,
@@ -71,15 +77,18 @@ class Repository :IRepository {
                 if (body != null) {
                     _newsFeed.value = Pair(null, body.results)
                 }
+                _articlesLoading.value = false
             }
         })
     }
 
     fun loadFromMostPopular(call: Call<MostPopularResponse>){
+        _articlesLoading.value = true
         call.enqueue(object: Callback<MostPopularResponse> {
 
             override fun onFailure(call: Call<MostPopularResponse>, t: Throwable) {
                 _newsFeed.value = Pair(t, null)
+                _articlesLoading.value = false
             }
 
             override fun onResponse(call: Call<MostPopularResponse>,
@@ -88,14 +97,17 @@ class Repository :IRepository {
                 if (body != null) {
                     _newsFeed.value = Pair(null, body.results)
                 }
+                _articlesLoading.value = false
             }
         })
     }
 
     fun loadFromSearch(call: Call<SearchResponse>){
+        _articlesLoading.value = true
         call.enqueue(object: Callback<SearchResponse> {
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                 _newsFeed.value = Pair(t, null)
+                _articlesLoading.value = false
             }
 
             override fun onResponse(
@@ -107,6 +119,7 @@ class Repository :IRepository {
                 if (docs != null) {
                     _newsFeed.value = Pair(null, docs)
                 }
+                _articlesLoading.value = false
             }
         })
     }
@@ -115,6 +128,7 @@ class Repository :IRepository {
 }
 
 interface IRepository {
+    fun articlesLoading(): MutableLiveData<Boolean>
     fun getNewsFeed(): MutableLiveData<ArticlesOrError>
     fun getTopStories()
     fun getArts()

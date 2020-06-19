@@ -1,12 +1,8 @@
-package com.example.mynews.viewmodels
+package com.example.mynews
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mynews.ArticlesOrError
-import com.example.mynews.IRepository
-import com.example.mynews.models.topstories.Article
 import org.joda.time.DateTime
 
 
@@ -20,6 +16,10 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
     init {
         newsFeed = repo.getNewsFeed()
         repo.getTopStories()
+    }
+
+    fun articlesLoading(): MutableLiveData<Boolean> {
+        return repo.articlesLoading()
     }
 
     fun getNewsFeed() : LiveData<ArticlesOrError> { return newsFeed }

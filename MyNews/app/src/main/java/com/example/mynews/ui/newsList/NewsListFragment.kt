@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mynews.viewmodels.MainViewModel
+import com.example.mynews.MainViewModel
 import com.example.mynews.R
 import com.example.mynews.models.AbstractNewsDoc
 import kotlinx.android.synthetic.main.fragment_top_news.*

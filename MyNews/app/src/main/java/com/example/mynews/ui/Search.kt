@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mynews.R
-import com.example.mynews.viewmodels.MainViewModel
+import com.example.mynews.MainViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.joda.time.DateTime
 import org.koin.android.viewmodel.ext.android.viewModel

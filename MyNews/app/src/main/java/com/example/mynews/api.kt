@@ -40,9 +40,9 @@ interface TimesService {
         @Query( "api-key") apiKey:String,
         @Query("fq" ) filters:String?, // fq:news_desk("Sports" "Arts") see NYT api docs
         @Query("begin_date") beginDate: String?,
-        @Query("end_date") endDate: String?
-
-        ):
+        @Query("end_date") endDate: String?,
+        @Query("sort") sort: String? = apiSortOrderRelevance
+    ):
             Call<com.example.mynews.models.search.Response>
 
 }

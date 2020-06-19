@@ -21,3 +21,7 @@ const val automobilesPath = "topstories/v2/automobiles.json"
 const val searchPath = "search/v2/articlesearch.json?"
 
 const val staticBasePath = "https://static01.nyt.com/"
+
+const val apiSortOrderRelevance = "relevance"
+const val apiSortOrderNewest = "newest"
+const val apiSortOrderOldest = "oldest"

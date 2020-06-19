@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="becf57bf-b748-4b71-a760-a094e12038b3" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="becf57bf-b748-4b71-a760-a094e12038b3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/Config.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/Repository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/Repository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/api.kt" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/api.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/ui/ArticleRvAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/ui/newsList/ArticleRvAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/ui/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/ui/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/ui/NewsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/ui/newsList/NewsListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/viewmodels/MainViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/java/com/example/mynews/viewmodels/MainViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/res/layout/fragment_top_news.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/res/layout/fragment_top_news.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyNews/app/src/main/res/navigation/main_nav_graph.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MyNews/app/src/main/res/navigation/main_nav_graph.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,20 +24,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1c85HzphLqgnebDm0ibP1qAeZl0" />
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -45,7 +50,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

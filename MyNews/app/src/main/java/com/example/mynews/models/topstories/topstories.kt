@@ -39,7 +39,9 @@ data class Article(
     @get:JvmName("getUri_")
     val uri: String,
 
-    val url: String?
+    @get:JvmName("getUrl_")
+    val url: String
+
 ): AbstractNewsDoc() {
 
     override fun getTitle():String { return title ?: ""}
@@ -61,6 +63,7 @@ data class Article(
 
     override fun getUri() : String { return uri }
 
+    override fun getUrl() : String { return url }
 }
 
 

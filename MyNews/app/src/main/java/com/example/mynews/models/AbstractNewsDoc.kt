@@ -10,6 +10,7 @@ abstract class AbstractNewsDoc {
     abstract fun getTitle() : String
     abstract fun getUri(): String
     abstract fun getPublishedDate(): String
+    abstract fun getUrl(): String
 
     override fun equals(other: Any?): Boolean {
         return this.hashCode() == other.hashCode()
@@ -25,6 +26,8 @@ abstract class AbstractNewsDoc {
         val formatterOut = DateTimeFormat.forPattern("M/d/yy")
         return dt.toString(formatterOut)
     }
+
+
 
 
 }

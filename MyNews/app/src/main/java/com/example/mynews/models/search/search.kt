@@ -36,7 +36,7 @@ data class Doc(
 
     @get:JvmName("getUri_")
     val uri: String,
-    val web_url: String?,
+    val web_url: String,
     val word_count: Int?
 ): AbstractNewsDoc() {
     override fun getThumbnailUrl(): String? {
@@ -68,6 +68,10 @@ data class Doc(
 
     override fun getPublishedDate(): String {
         return pub_date
+    }
+
+    override fun getUrl(): String {
+        return web_url
     }
 
 }

@@ -12,6 +12,8 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
     private val searchEndDate = MutableLiveData<DateTime>()
     private val searchFilters = MutableLiveData<List<String>>()
     private val searchQuery = MutableLiveData<String>()
+    private val currentArticleUrl = MutableLiveData<String>()
+
 
     init {
         newsFeed = repo.getNewsFeed()
@@ -78,7 +80,13 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
         return searchFilters
     }
 
+    fun setCurrentArticleUrl(url: String) {
+        currentArticleUrl.value = url
+    }
 
+    fun getCurrentArticleUrl(): LiveData<String> {
+        return currentArticleUrl
+    }
 
 
 }

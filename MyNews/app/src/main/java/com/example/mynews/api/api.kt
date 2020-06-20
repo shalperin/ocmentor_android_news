@@ -10,39 +10,39 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface TimesService {
-    @GET(topStoriesPath)
+    @GET(TOP_STORIES_PATH)
     fun topStories(@Query("api-key") apiKey:String):
             Call<com.example.mynews.models.topstories.Response>
 
-    @GET(artsPath)
+    @GET(ARTS_PATH)
     fun arts(@Query("api-key") apiKey:String):
             Call<com.example.mynews.models.topstories.Response>
 
-    @GET(mostPopularPath)
+    @GET(MOST_POPULAR_PATH)
     fun mostPopular(@Query("api-key") apiKey:String):
             Call<com.example.mynews.models.mostpopular.Response>
 
-    @GET(technologyPath)
+    @GET(TECHNOLOGY_PATH)
     fun technology(@Query("api-key") apiKey:String):
             Call<com.example.mynews.models.topstories.Response>
 
-    @GET(automobilesPath)
+    @GET(AUTOMOBILES_PATH)
     fun automobiles(@Query("api-key") apiKey:String):
             Call<com.example.mynews.models.topstories.Response>
 
-    @GET(realEstatePath)
+    @GET(REAL_ESTATE_PATH)
     fun realEstate(@Query("api-key") apiKey:String):
             Call<com.example.mynews.models.topstories.Response>
 
     //todo this needs to support a few other fields.
-    @GET(searchPath)
+    @GET(SEARCH_PATH)
     fun search(
         @Query("query") query:String?,
         @Query( "api-key") apiKey:String,
         @Query("fq" ) filters:String?, // fq:news_desk("Sports" "Arts") see NYT api docs
         @Query("begin_date") beginDate: String?,
         @Query("end_date") endDate: String?,
-        @Query("sort") sort: String? = apiSortOrderRelevance
+        @Query("sort") sort: String? = API_SORT_ORDER_RELEVANCE
     ):
             Call<com.example.mynews.models.search.Response>
 
@@ -56,7 +56,7 @@ val client = OkHttpClient()
     .build()
 
 val retrofit = Retrofit.Builder()
-    .baseUrl(baseUrl)
+    .baseUrl(BASE_URL)
     .client(client)
     .addConverterFactory(GsonConverterFactory.create())
     .build()

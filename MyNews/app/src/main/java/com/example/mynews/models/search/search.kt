@@ -1,7 +1,7 @@
 package com.example.mynews.models.search
 
 import com.example.mynews.models.AbstractNewsDoc
-import com.example.mynews.staticBasePath
+import com.example.mynews.STATIC_BASE_PATH
 
 
 data class Response(
@@ -145,7 +145,7 @@ data class Legacy(
 
 fun relStatic(path: String?) : String? {
     if (path != null) {
-        return staticBasePath + path
+        return STATIC_BASE_PATH + path
     } else {
         return null
     }

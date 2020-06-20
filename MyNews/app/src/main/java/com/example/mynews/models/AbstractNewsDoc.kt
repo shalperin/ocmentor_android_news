@@ -1,6 +1,5 @@
 package com.example.mynews.models
 
-import com.example.mynews.staticBasePath
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
@@ -16,10 +15,7 @@ abstract class AbstractNewsDoc {
         return this.hashCode() == other.hashCode()
     }
 
-    override fun hashCode(): Int {
-        return getThumbnailUrl().hashCode() * getSectionOrType().hashCode() * getTitle().hashCode() *
-                getUri().hashCode() * getPublishedDate().hashCode()
-    }
+    override fun hashCode(): Int { return getUri().hashCode() }
 
     fun getHumanizedPublishedDate(): String {
         val dt = DateTime.parse(getPublishedDate())

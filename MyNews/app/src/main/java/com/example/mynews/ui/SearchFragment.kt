@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import org.joda.time.DateTime
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class Search : Fragment(R.layout.fragment_search) {
+class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val viewModel by viewModel<MainViewModel>()
     lateinit var beginDatePickerDialog:DatePickerDialog

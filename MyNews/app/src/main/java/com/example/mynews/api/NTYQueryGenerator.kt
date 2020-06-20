@@ -1,4 +1,4 @@
-package com.example.mynews
+package com.example.mynews.api
 
 import org.joda.time.DateTime
 

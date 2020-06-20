@@ -1,6 +1,9 @@
 package com.example.mynews
 
 import androidx.lifecycle.MutableLiveData
+import com.example.mynews.api.formatDateForQuery
+import com.example.mynews.api.formatNewsDeskFilters
+import com.example.mynews.api.timesService
 import org.joda.time.DateTime
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,7 +54,8 @@ class Repository :IRepository {
     //Todo this only supports term right now.
     override fun getSearch(query: String?, beginDate:DateTime?, endDate:DateTime?, newsDesks: List<String>?)
     {
-        loadFromSearch(timesService.search(
+        loadFromSearch(
+            timesService.search(
             query=query,
             apiKey = apiKey ,
             filters = formatNewsDeskFilters(newsDesks),

@@ -1,5 +1,6 @@
-package com.example.mynews
+package com.example.mynews.api
 
+import com.example.mynews.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call

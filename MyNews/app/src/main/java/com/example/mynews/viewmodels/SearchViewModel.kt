@@ -1,46 +1,17 @@
-package com.example.mynews
+package com.example.mynews.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mynews.FOREGROUND
+import com.example.mynews.repositories.IRepository
 import org.joda.time.DateTime
 
-
-class MainViewModel(private val repo: IRepository) : ViewModel() {
-    private val newsFeed: LiveData<ArticlesOrError>
+class SearchViewModel(val repo: IRepository) : ViewModel() {
     private val searchBeginDate =  MutableLiveData<DateTime>()
     private val searchEndDate = MutableLiveData<DateTime>()
     private val searchFilters = MutableLiveData<List<String>>()
     private val searchQuery = MutableLiveData<String>()
-    private val currentArticleUrl = MutableLiveData<String>()
-
-
-    init {
-        newsFeed = repo.getNewsFeed()
-        repo.getTopStories()
-    }
-
-    fun articlesLoading(): MutableLiveData<Boolean> {
-        return repo.articlesLoading()
-    }
-
-    fun getNewsFeed() : LiveData<ArticlesOrError> { return newsFeed }
-
-
-
-    fun getTopStories() { repo.getTopStories() }
-
-    fun getMostPopular() { repo.getMostPopular() }
-
-    fun getArts() { repo.getArts() }
-
-    fun getRealEstate() {repo.getRealEstate()}
-
-    fun getAutomobiles() { repo.getAutomobiles() }
-
-    fun getTechnology() { repo.getTechnology() }
-
-
 
     fun setSearchBeginDate(dt: DateTime?) { searchBeginDate.value = dt }
 
@@ -55,7 +26,7 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
     }
 
     fun setSearchQuery(q: String) {
-            searchQuery.value = q
+        searchQuery.value = q
 
     }
 
@@ -63,13 +34,16 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
         searchFilters.value = f
     }
 
+
     fun submitSearch() {
         val beginDate = searchBeginDate.value
         val endDate = searchEndDate.value
         val filters = searchFilters.value
         val query = searchQuery.value
 
-        repo.getSearch(query, beginDate, endDate, filters)
+        repo.getSearch(query, beginDate, endDate, filters,
+            FOREGROUND
+        )
     }
 
     fun getSearchQuery(): LiveData<String> {
@@ -79,14 +53,4 @@ class MainViewModel(private val repo: IRepository) : ViewModel() {
     fun getFilters(): LiveData<List<String>> {
         return searchFilters
     }
-
-    fun setCurrentArticleUrl(url: String) {
-        currentArticleUrl.value = url
-    }
-
-    fun getCurrentArticleUrl(): LiveData<String> {
-        return currentArticleUrl
-    }
-
-
 }

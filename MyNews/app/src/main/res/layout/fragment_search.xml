@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,8 +40,6 @@
         android:src="@drawable/ic_baseline_arrow_drop_down_24"
         />
 
-
-
     <TextView
         android:id="@+id/end_date"
         android:layout_width="0dp"
@@ -63,74 +62,18 @@
 
 
 
+        <include layout="@layout/include_search_checkboxes"
+            android:id="@+id/checkboxes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/end_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
 
 
 
-
-    <CheckBox
-        android:id="@+id/arts"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/end_date"
-        app:layout_constraintRight_toLeftOf="@id/politics"
-        android:text="Arts"
-        android:layout_marginTop="16dp"
-        />
-
-    <CheckBox
-        android:id="@+id/politics"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/arts"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/arts"
-        android:text="Politics"/>
-
-
-
-
-    <CheckBox
-        android:id="@+id/business"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arts"
-        app:layout_constraintRight_toLeftOf="@id/politics"
-        android:text="Business"
-        />
-
-    <CheckBox
-        android:id="@+id/sports"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/arts"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/business"
-        android:text="Sports"/>
-
-
-
-
-    <CheckBox
-        android:id="@+id/entrepreneurs"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/business"
-        app:layout_constraintRight_toLeftOf="@id/politics"
-        android:text="Entrepreneurs"
-        />
-
-    <CheckBox
-        android:id="@+id/travel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/arts"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/entrepreneurs"
-        android:text="Travel"/>
 
 
 
@@ -142,9 +85,12 @@
         android:text="SEARCH"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/travel"
+        app:layout_constraintTop_toBottomOf="@id/checkboxes"
         android:layout_marginTop="16dp"
         />
+
+
+
 
 
 

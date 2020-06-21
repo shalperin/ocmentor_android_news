@@ -1,16 +1,18 @@
 package com.example.mynews.di
 
-import com.example.mynews.IRepository
-import com.example.mynews.Repository
-import com.example.mynews.MainViewModel
+import com.example.mynews.notifications.Notifier
+import com.example.mynews.repositories.IRepository
+import com.example.mynews.repositories.Repository
+import com.example.mynews.viewmodels.MainViewModel
+import com.example.mynews.viewmodels.NotificationsViewModel
+import com.example.mynews.viewmodels.SearchViewModel
 import org.koin.dsl.module
 
 val newsModule = module {
-
-    // WRONG:
-    //  viewModel { MainViewModel(get()) }
     single { MainViewModel(get()) }  // this needs to be a singleton to share across fragments.
+    single { NotificationsViewModel(get()) }
+    single { SearchViewModel(get()) }
+    single { Repository( get(), get()) as IRepository }
+    single { Notifier(get()) }
 
-
-    single { Repository() as IRepository }
 }

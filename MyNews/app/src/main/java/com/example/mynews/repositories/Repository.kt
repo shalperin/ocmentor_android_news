@@ -1,6 +1,7 @@
 package com.example.mynews.repositories
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -8,7 +9,7 @@ import com.example.mynews.*
 import com.example.mynews.api.formatDateForQuery
 import com.example.mynews.api.formatNewsDeskFilters
 import com.example.mynews.api.timesService
-import com.example.mynews.models.search.TrackedSearchAlertRequest
+import com.example.mynews.notifications.TrackedSearchAlertRequest
 import com.example.mynews.notifications.NotificationWorker
 import com.example.mynews.notifications.Notifier
 import org.joda.time.DateTime
@@ -22,13 +23,10 @@ typealias MostPopularResponse = com.example.mynews.models.mostpopular.Response
 typealias SearchResponse = com.example.mynews.models.search.Response
 
 class Repository(val appContext: Context, val notifier: Notifier): IRepository {
-
+    val TAG = this::class.java.simpleName
     private val _newsFeed = MutableLiveData<ArticlesOrError>()
-    private val prefs = appContext.getSharedPreferences(PREFERENCE_FILE, Context.MODE_PRIVATE)
     private val _articlesLoading = MutableLiveData<Boolean>()
-    private val _notificationQuery = MutableLiveData<String>()
-    private val _notificationFilters = MutableLiveData<List<String>>()
-    private val _notificationActive= MutableLiveData<Boolean>()
+
 
     override fun getNewsFeed(): MutableLiveData<ArticlesOrError> { return _newsFeed }
 
@@ -47,11 +45,14 @@ class Repository(val appContext: Context, val notifier: Notifier): IRepository {
     override fun getMostPopular(){ loadFromMostPopular(timesService.mostPopular(apiKey)) }
 
     override fun getSearch(query: String?, beginDate:DateTime?, endDate:DateTime?,
-                           newsDesks: List<String>?, fromBackgroundProcess:Boolean)
+                           newsDesks: Set<String>?)
     {
 
-        val tracking = TrackedSearchAlertRequest(newsDesks, query,
-            null, beginDate, endDate)
+        val tracking =
+            TrackedSearchAlertRequest(
+                newsDesks, query,
+                null, beginDate, endDate
+            )
 
         val call =timesService.search(
             query=query,
@@ -61,7 +62,7 @@ class Repository(val appContext: Context, val notifier: Notifier): IRepository {
             endDate = formatDateForQuery(endDate)
         )
 
-        loadFromSearch(call, tracking, fromBackgroundProcess)
+        loadFromSearch(call, tracking)
     }
 
 
@@ -106,8 +107,7 @@ class Repository(val appContext: Context, val notifier: Notifier): IRepository {
         })
     }
 
-    private fun loadFromSearch(call: Call<SearchResponse>, tracking: TrackedSearchAlertRequest,
-                               fromBackgroundProcess: Boolean){
+    private fun loadFromSearch(call: Call<SearchResponse>, tracking: TrackedSearchAlertRequest){
         _articlesLoading.value = true
         call.enqueue(object: Callback<SearchResponse> {
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
@@ -122,13 +122,10 @@ class Repository(val appContext: Context, val notifier: Notifier): IRepository {
                 val body = response.body()
                 val docs = body?.response?.docs
                 if (docs != null) {
-                    tracking.searchResult = docs
-                    if (fromBackgroundProcess) {
-                        checkAndNotify(tracking)
-                    } else {
-                        _newsFeed.value = Pair(null, docs)
-                    }
-                    save(tracking)
+                    //only track workmanager searches for now.
+//                    tracking.searchResult = docs
+                    _newsFeed.value = Pair(null, docs)
+//                    tracking.save(appContext)
 
                 }
                 _articlesLoading.value = false
@@ -136,100 +133,26 @@ class Repository(val appContext: Context, val notifier: Notifier): IRepository {
         })
     }
 
-    private fun save(searchAlertRequest: TrackedSearchAlertRequest) {
-        val newHistory = fetchSearchAlertHistory()
-            .union(listOf(searchAlertRequest.hashCode())).joinToString(",")
-        prefs
-            .edit()
-            .putString(SEARCH_ALERT_STORAGE_KEY, newHistory)
-            .apply()
-    }
-
-    private fun searchAlertHistoryContains(searchAlertRequest: TrackedSearchAlertRequest): Boolean {
-        return fetchSearchAlertHistory().contains(searchAlertRequest.hashCode())
-    }
-
-    private fun fetchSearchAlertHistory(): Set<Int> {
-        val serialized = prefs.getString(SEARCH_ALERT_STORAGE_KEY, "")
-        val deserializedStep1:List<String> = serialized!!.split(",").filter{ !it.isEmpty() }
-        val deserialezedStep2:List<Int> = deserializedStep1.map{it.toInt()}
-        return deserialezedStep2.toSet()
-    }
-
-    private fun checkAndNotify(tracking: TrackedSearchAlertRequest) {
-        if (!searchAlertHistoryContains(tracking)) {
-            notifier.notify(tracking)
-        }
-    }
-
-    private fun updateNotifications() {
-
-        val query = _notificationQuery.value
-        val filters = _notificationFilters.value
-        val active = _notificationActive.value
 
 
-//        TODO MTW
-//        if (active !=null && active) {
-//            WorkManager.getInstance(appContext).cancelAllWorkByTag(NOTIFICATION_TAG)
-//
-//            val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
-//                com.example.mynews.NOTIFICATION_PERIOD_IN_MINUTES,
-//                TimeUnit.MINUTES
-//            ).build()
-//
-//            WorkManager.getInstance(appContext).enqueue(workRequest)
-//            prefs.edit().putBoolean(NOTIFICATION_ACTIVE_PREF, true).apply()
-//        } else {
-//            WorkManager.getInstance(appContext).cancelAllWorkByTag(NOTIFICATION_TAG)
-//        }
 
-    }
 
-    override fun setNotificationsActive() {
-        prefs.edit().putBoolean(NOTIFICATION_ACTIVE_PREF, true).apply()
-        _notificationActive.value = true
-        updateNotifications()
-    }
+}
 
-    override fun setNotificationsInactive(
-    ) {
-        prefs.edit().putBoolean(NOTIFICATION_ACTIVE_PREF, false).apply()
-        _notificationActive.value = false
-        updateNotifications()
-    }
 
-    override fun setNotificationQuery(q: String) {
-        prefs.edit().putString(NOTIFICATION_QUERY_PREF, q).apply()
-        _notificationQuery.value = q
-        updateNotifications()
-    }
+interface IRepository {
+    fun articlesLoading(): MutableLiveData<Boolean>
+    fun getNewsFeed(): MutableLiveData<ArticlesOrError>
+    fun getTopStories()
+    fun getArts()
+    fun getRealEstate()
+    fun getAutomobiles()
+    fun getTechnology()
+    fun getMostPopular()
 
-    override fun setNotificationFilters(f: List<String>) {
-        prefs.edit().putString(NOTIFICATION_FILTERS_PREF, f.joinToString(",") ).apply()
-        _notificationFilters.value = f
-       updateNotifications()
-    }
-
-    override fun getNotificationQuery(): MutableLiveData<String> {
-        return _notificationQuery
-    }
-
-    override fun getNotificationFilters(): MutableLiveData<List<String>> {
-        return _notificationFilters
-    }
-
-    override fun getNotificationsActive():MutableLiveData<Boolean> {
-        return _notificationActive
-    }
-
-    init {
-        _notificationFilters.value = prefs
-            .getString(NOTIFICATION_FILTERS_PREF, "")!!
-            .split(",")
-        _notificationQuery.value = prefs.getString(NOTIFICATION_QUERY_PREF, "")
-        _notificationActive.value = prefs.getBoolean(NOTIFICATION_ACTIVE_PREF, false)
-        updateNotifications()
-    }
-
+    fun getSearch(
+        query: String?,
+        beginDate: DateTime?,
+        endDate: DateTime?,
+        newsDesks: Set<String>?)
 }

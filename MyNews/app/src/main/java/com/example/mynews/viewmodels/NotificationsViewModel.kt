@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mynews.repositories.IRepository
+import com.example.mynews.repositories.NotificationFrontendRepo
 
-class NotificationsViewModel(val repo: IRepository) : ViewModel() {
+class NotificationsViewModel(val repo: NotificationFrontendRepo) : ViewModel() {
 
     private val notificationFilters = MutableLiveData<List<String>>()
     private val notificationQuery = MutableLiveData<String>()

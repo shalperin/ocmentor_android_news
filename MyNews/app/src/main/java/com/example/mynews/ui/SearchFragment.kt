@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mynews.R
+import com.example.mynews.repositories.Repository
 import com.example.mynews.viewmodels.MainViewModel
 import com.example.mynews.viewmodels.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -20,7 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
-    private val viewModel by viewModel<SearchViewModel>()
+    private val viewModel by viewModel<MainViewModel>()
     lateinit var beginDatePickerDialog:DatePickerDialog
     lateinit var endDatePickerDialog: DatePickerDialog
     lateinit var filters: List<Pair<CheckBox, String>>
@@ -80,6 +81,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         viewModel.setSearchFilters(filters
             .filter { (checkbox, _) -> checkbox.isChecked }
             .map { (_, filterName) -> filterName }
+            .toSet()
         )
         viewModel.setSearchQuery(query)
         viewModel.submitSearch()

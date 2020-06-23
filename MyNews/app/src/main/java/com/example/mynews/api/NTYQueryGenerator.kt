@@ -2,7 +2,7 @@ package com.example.mynews.api
 
 import org.joda.time.DateTime
 
-fun formatNewsDeskFilters(desks: List<String>?): String? {
+fun formatNewsDeskFilters(desks: Set<String>?): String? {
     if (desks == null || desks.size == 0) {
         return null
     } else {

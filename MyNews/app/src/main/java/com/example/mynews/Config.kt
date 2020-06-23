@@ -33,8 +33,8 @@ const val FOREGROUND = false
 const val BACKGROUND = true
 
 const val NOTIFICATION_TAG = "new_article_notifications"
-const val NOTIFICATION_PERIOD_IN_MINUTES = 60L
-const val NOTIFICATION_INITIAL_DELAY = 0L
+const val NOTIFICATION_PERIOD_IN_MINUTES = 24*60L
+const val NOTIFICATION_INITIAL_DELAY = 24*60L
 const val NOTIFICATION_QUERY_PREF = "notification_query"
 const val NOTIFICATION_FILTERS_PREF = "notification_filters"
 const val NOTIFICATION_ACTIVE_PREF = "notification_active"
